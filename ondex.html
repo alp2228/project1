@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>予約管理画面</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Verdana', sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: #006400;
+        }
+
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #006400;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #006400;
+            color: white;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .button {
+            background-color: #006400;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #228b22;
+        }
+    </style>
+    <script>
+        function loadReservations() {
+            const reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+            reservations.sort((a, b) => a.reservationTime.localeCompare(b.reservationTime));
+
+            let tableHTML = '<table><tr><th>ニックネーム</th><th>予約時間</th></tr>';
+            reservations.forEach(reservation => {
+                tableHTML += `<tr><td>${reservation.nickname}</td><td>${reservation.reservationTime}</td></tr>`;
+            });
+            tableHTML += '</table>';
+
+            document.getElementById('reservation-list').innerHTML = tableHTML;
+        }
+    </script>
+</head>
+<body onload="loadReservations()">
+
+    <h1>予約管理画面</h1>
+    <div id="reservation-list"></div>
+
+    <div class="button-container">
+        <button class="button" onclick="loadReservations()">予約情報を更新</button>
+    </div>
+
+</body>
+</html>
